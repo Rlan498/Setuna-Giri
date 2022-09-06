@@ -17,6 +17,10 @@ public class Hayaoshi : MonoBehaviour
     int ATK2 = 0;
     int reset = 0;
 
+    public GameObject Mark;
+    int count = 0;//ただの確認のための変数　後々消してヨシ
+    bool pena = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +29,8 @@ public class Hayaoshi : MonoBehaviour
         pena2 = 0;
         ATK1 = 0;
         ATK2 = 0;
+
+        Mark = GameObject.Find("Mark");
         Debug.Log("準備完了したら　PL1:S  PL2:↓");
     }
 
@@ -56,28 +62,33 @@ public class Hayaoshi : MonoBehaviour
             Debug.Log("Invokeが止まる");
         }
 
+        //ここから見切りの処理
         if ((ready1 == 1 && ready2 == 1 && ready == 0) || reset == 1)
         {
-            reset = 0;
-            ready = 1;
+            if(pena == false)
+            {
+                pena = true;
+                StartCoroutine(wait());//本家で言う所のカットインの役割
+            }
+
             rnd1 = rnd;
             Debug.Log("双方の準備完了");
             Invoke("Exclamation", rnd1);
             //両者準備完了からrnd秒後にExclamation関数が実行
             /*Debug.Log("秒数は" + rnd1);*/
         }
-            
-            if (Input.GetKey(KeyCode.S) && ready == 1 && reset == 0)
+
+        if (Input.GetKey(KeyCode.S) && ready == 1 && reset == 0)
         {
-            if(fight == 0)
+            if (fight == 0)
             {
                 if (pena1 < 999)//ペナルティはここのn+1回目
-                    　　　　　//今は入力受付に間がないため多め
+                                //今は入力受付に間がないため多め
                 {
-                    pena1 = pena1 + 1;
-                    //PL1に罰則値を追加
-                    reset = 1;
-                    //見切り前へ
+                    StopAllCoroutines();
+                    reset = 1;//罰則値追加前にresetに1を代入 = 連続でペナ対策  見切り前へ
+                    pena1 = pena1 + 1;//PL1に罰則値を追加
+                    pena = false;//見合いの連続対策のため
                     Debug.Log("PL1 フライング" + pena1 + "回目");
                 }
                 else//フライング回数でのペナルティ設定
@@ -102,15 +113,15 @@ public class Hayaoshi : MonoBehaviour
 
         if (Input.GetKey(KeyCode.DownArrow) && ready == 1 && reset == 0)
         {
-            if(fight == 0)
+            if (fight == 0)
             {
                 if (pena2 < 999)//ペナルティはここのn+1回目
-                              //今は入力受付に間がないため多め
+                                //今は入力受付に間がないため多め
                 {
-                    pena2 = pena2 + 1;
-                    //PL2に罰則値を追加
-                    reset = 1;
-                    //見切り前へ
+                    StopAllCoroutines();
+                    reset = 1;//見切り前へ
+                    pena2 = pena2 + 1;//PL2に罰則値を追加
+                    pena = false;
                     Debug.Log("PL2 フライング" + pena2 + "回目");
                 }
                 else//フライング回数でのペナルティ設定
@@ -130,18 +141,26 @@ public class Hayaoshi : MonoBehaviour
                     //PL1の防御回数を記録
                     Debug.Log("PL2 勝ち");
                 }
-                else
-                {
-
-                }
             }
         }
-    }
+    }        
 
     private void Exclamation()
     {
+        reset = 0;
         fight = 1;
         //ここに「！」画像表示の記述
+        Mark.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
         Debug.Log("！");
+    }
+
+    IEnumerator wait()
+    {
+        //お見合いの処理的な場所
+        yield return new WaitForSeconds(1.0f);
+        count += 1;
+        Debug.Log(count + "回目、構え！！！");
+        ready = 1;
+        reset = 0;
     }
 }
