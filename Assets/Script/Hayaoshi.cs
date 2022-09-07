@@ -17,9 +17,15 @@ public class Hayaoshi : MonoBehaviour
     int ATK2 = 0;
     int reset = 0;
 
-    public GameObject Mark;
+    GameObject Mark;
+    GameObject image1;
+    GameObject image2;
+    GameObject image2_2;
+    
     int count = 0;//ただの確認のための変数　後々消してヨシ
     bool pena = false;
+    float timer = 0;//入力差を格納する変数
+    int time_start = 0;//1の時に入力タイミングの差を計測 2で終了する処理
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +37,9 @@ public class Hayaoshi : MonoBehaviour
         ATK2 = 0;
 
         Mark = GameObject.Find("Mark");
+        image1 = GameObject.Find("image1");
+        image2 = GameObject.Find("image2");
+        image2_2 = GameObject.Find("image2_2");
         Debug.Log("準備完了したら　PL1:S  PL2:↓");
     }
 
@@ -82,8 +91,7 @@ public class Hayaoshi : MonoBehaviour
         {
             if (fight == 0)
             {
-                if (pena1 < 999)//ペナルティはここのn+1回目
-                                //今は入力受付に間がないため多め
+                if (pena1 < 2)//ペナルティはここのn+1回目
                 {
                     StopAllCoroutines();
                     reset = 1;//罰則値追加前にresetに1を代入 = 連続でペナ対策  見切り前へ
@@ -94,19 +102,25 @@ public class Hayaoshi : MonoBehaviour
                 else//フライング回数でのペナルティ設定
                 {
                     reset = 2;
-                    Debug.Log("PL1 フライング1000回目　負け");
+                    Debug.Log("PL1 フライング3回目　負け");
                 }
             }
             else
             {
                 //ここに入力タイム関係の記述？
 
-                if (ATK2 == 0)//PL2がまだ押してないとき
+                if (ATK2 == 0 && ATK1 == 0)//PL2がまだ押してないとき かつ　PL1が押していなかったとき
                 {
                     ATK1 = 1;
+                    time_start += 1;
                     DEF2 = DEF2 + 1;
                     //攻防シーンでのPL2の守備回数を記録
                     Debug.Log("PL1 勝ち");
+                }
+                else if (ATK2 == 1)//PL2がすでに押しているとき　かつ　PL1が丁度押したとき
+                {
+                    dif_calc();
+                    image2_2.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
                 }
             }
         }
@@ -115,8 +129,7 @@ public class Hayaoshi : MonoBehaviour
         {
             if (fight == 0)
             {
-                if (pena2 < 999)//ペナルティはここのn+1回目
-                                //今は入力受付に間がないため多め
+                if (pena2 < 2)//ペナルティはここのn+1回目
                 {
                     StopAllCoroutines();
                     reset = 1;//見切り前へ
@@ -127,31 +140,54 @@ public class Hayaoshi : MonoBehaviour
                 else//フライング回数でのペナルティ設定
                 {
                     reset = 2;
-                    Debug.Log("PL2 フライング1000回目　負け");
+                    Debug.Log("PL2 フライング3回目　負け");
                 }
             }
             else
             {
                 //ここに入力タイム関係の記述？
 
-                if (ATK1 == 0)//PL1がまだ押してないとき
+                if (ATK1 == 0 && ATK2 == 0)//PL1がまだ押してないとき かつ　PL2が押していなかったとき
                 {
                     ATK2 = 1;
+                    time_start += 1;
                     DEF1 = DEF1 + 1;
                     //PL1の防御回数を記録
                     Debug.Log("PL2 勝ち");
                 }
+                else if (ATK1 == 1)//PL1がすでに押しているとき　かつ　PL2が丁度押したとき
+                {
+                    dif_calc();
+                    image2.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
+                }
             }
+        }
+
+        if(time_start == 1)//差の計算
+        {
+            timer += Time.deltaTime;
         }
     }        
 
     private void Exclamation()
     {
-        reset = 0;
-        fight = 1;
-        //ここに「！」画像表示の記述
-        Mark.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
-        Debug.Log("！");
+        if(fight == 0)
+        {
+            reset = 0;
+            fight = 1;
+            //ここに「！」画像表示の記述
+            Mark.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
+            Debug.Log("！");
+        }
+    }
+
+    private void dif_calc()
+    {
+        time_start += 1;
+        fight += 1;//この処理でfightは2のはず
+        Debug.Log("入力タイミングの差は" + timer + "でした");
+        Mark.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);
+        image1.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);//image1 消去
     }
 
     IEnumerator wait()
