@@ -13,6 +13,8 @@ public class Chase : MonoBehaviour
     int win1 = 0;
     int win2 = 0;
 
+    public GameObject Wall;//•Ç
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,8 @@ public class Chase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Wall.SetActive(true);//•Ç‚Ì‹N“®
+
         if(Hayaoshi.fight == 2)
         {
             Hayaoshi.fight = 3;
