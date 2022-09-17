@@ -21,51 +21,69 @@ public class Object_Move_atk : MonoBehaviour
 
         if (Chase.chaseStart == 0)
         {
+            speed = 10;
             rb.velocity = new Vector2(0.0f, 0.0f);
         }
 
-        if (Hayaoshi.ATK1 == 1 && Chase.chaseStart == 1)
+
+        if (Chase.chaseStart == 1)
         {
-            if (Input.GetKey(KeyCode.S))
+            if (speed == 10)
             {
-                ySpeed = -speed;
+                if (Hayaoshi.timer <= 0.2) //‘¬‚³‚ÌãŒÀ
+                {
+                    speed = speed + 12.5f * Hayaoshi.timer;
+                }
+                else
+                {
+                    speed = speed + 2.5f;
+                }
             }
-            else if (Input.GetKey(KeyCode.W))
+            Debug.Log("speed = " + speed);
+        
+            if (Hayaoshi.ATK1 == 1)
             {
-                ySpeed = speed;
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                xSpeed = speed;
-            }
-            else if (Input.GetKey(KeyCode.A))
-            {
-                xSpeed = -speed;
+                if (Input.GetKey(KeyCode.S))
+                {
+                    ySpeed = -speed;
+                }
+                else if (Input.GetKey(KeyCode.W))
+                {
+                    ySpeed = speed;
+                }
+                if (Input.GetKey(KeyCode.D))
+                {
+                    xSpeed = speed;
+                }
+                else if (Input.GetKey(KeyCode.A))
+                {
+                    xSpeed = -speed;
+                }
+
+                rb.velocity = new Vector2(xSpeed, ySpeed);
             }
 
-            rb.velocity = new Vector2(xSpeed, ySpeed);
-        }
+            if (Hayaoshi.ATK2 == 1)
+            {
+                if (Input.GetKey(KeyCode.DownArrow))
+                {
+                    ySpeed = -speed;
+                }
+                else if (Input.GetKey(KeyCode.UpArrow))
+                {
+                    ySpeed = speed;
+                }
+                if (Input.GetKey(KeyCode.RightArrow))
+                {
+                    xSpeed = speed;
+                }
+                else if (Input.GetKey(KeyCode.LeftArrow))
+                {
+                    xSpeed = -speed;
+                }
 
-        if (Hayaoshi.ATK2 == 1 && Chase.chaseStart == 1)
-        {
-            if (Input.GetKey(KeyCode.DownArrow))
-            {
-                ySpeed = -speed;
+                rb.velocity = new Vector2(xSpeed, ySpeed);
             }
-            else if (Input.GetKey(KeyCode.UpArrow))
-            {
-                ySpeed = speed;
-            }
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                xSpeed = speed;
-            }
-            else if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                xSpeed = -speed;
-            }
-            
-            rb.velocity = new Vector2(xSpeed, ySpeed);
         }
         
     }

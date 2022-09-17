@@ -63,12 +63,12 @@ public class Chase : MonoBehaviour
 
         if(Hayaoshi.ATK1 == 1 && Hayaoshi.DEF2 == 2 || Hayaoshi.ATK2 == 1 && Hayaoshi.DEF1 == 2)
         {
-            DEF.transform.localScale = new Vector2(2.0f, 2.0f);//2‰ñ–Ú‚ÌŽç”õ‘¤‚Ì‘å‚«‚³
+            DEF.transform.localScale = new Vector2(4.0f, 4.0f);//2‰ñ–Ú‚ÌŽç”õ‘¤‚Ì‘å‚«‚³
         }
 
         if (Hayaoshi.ATK1 == 1 && Hayaoshi.DEF2 == 3 || Hayaoshi.ATK2 == 1 && Hayaoshi.DEF1 == 3)
         {
-            DEF.transform.localScale = new Vector2(1.5f, 1.5f);//3‰ñ–Ú‚ÌŽç”õ‘¤‚Ì‘å‚«‚³
+            DEF.transform.localScale = new Vector2(3.0f, 3.0f);//3‰ñ–Ú‚ÌŽç”õ‘¤‚Ì‘å‚«‚³
         }
         DEF.SetActive(true);
 
@@ -94,7 +94,7 @@ public class Chase : MonoBehaviour
         {
             if (Hayaoshi.DEF2 == 1)
             {
-                if ((x > -1.5f && x < 1.5f) && (y > -1.5f && y < 1.5f))
+                if ((x <= -2.75f || x >= 2.75f) || (y <= -2.75f || y >= 2.75f))
                 {
                     win1 = 1;
                 }
@@ -102,7 +102,7 @@ public class Chase : MonoBehaviour
 
             if (Hayaoshi.DEF2 == 2)
             {
-                if ((x > -1.25f && x < 1.25f) && (y > -1.25f && y < 1.25f))
+                if ((x <= -2.25f || x >= 2.25f) || (y <= -2.25f || y >= 2.25f))
                 {
                     win1 = 1;
                 }
@@ -110,7 +110,7 @@ public class Chase : MonoBehaviour
 
             if (Hayaoshi.DEF2 == 3)
             {
-                if ((x > -1.0f && x < 1.0f) && (y > -1.0f && y < 1.0f))
+                if ((x <= -1.75f || x >= 1.75f) || (y <= -1.75f || y >= 1.75f))
                 {
                     win1 = 1;
                 }
@@ -121,7 +121,7 @@ public class Chase : MonoBehaviour
         {
             if (Hayaoshi.DEF1 == 1)
             {
-                if ((x > -1.5f && x < 1.5f) && (y > -1.5f && y < 1.5f))
+                if ((x <= -2.75f || x >= 2.75f) || (y <= -2.75f || y >= 2.75f))
                 {
                     win2 = 1;
                 }
@@ -129,7 +129,7 @@ public class Chase : MonoBehaviour
 
             if (Hayaoshi.DEF1 == 2)
             {
-                if ((x > -1.25f && x < 1.25f) && (y > -1.25f && y < 1.25f))
+                if ((x <= -2.25f || x >= 2.25f) || (y <= -2.25f || y >= 2.25f))
                 {
                     win2 = 1;
                 }
@@ -137,7 +137,7 @@ public class Chase : MonoBehaviour
 
             if (Hayaoshi.DEF1 == 3)
             {
-                if ((x > -1.0f && x < 1.0f) && (y > -1.0f && y < 1.0f))
+                if ((x <= -1.75f || x >= 1.75f) || (y <= -1.75f || y >= 1.75f))
                 {
                     win2 = 1;
                 }
