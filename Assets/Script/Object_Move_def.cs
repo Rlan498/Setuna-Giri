@@ -19,64 +19,63 @@ public class Object_Move_def : MonoBehaviour
         float xSpeed = 0.0f;
         float ySpeed = 0.0f;
 
-        if (Hayaoshi.ATK1 == 0)
+        if (Chase.chaseStart == 0)
+        {
+            rb.velocity = new Vector2(0.0f, 0.0f);
+        }
+
+        if (Hayaoshi.ATK2 == 1 && Chase.chaseStart == 1)
         {
             if (Input.GetKey(KeyCode.S))
             {
-                xSpeed = 0.0f;
                 ySpeed = -speed;
             }
             else if (Input.GetKey(KeyCode.W))
             {
-                xSpeed = 0.0f;
                 ySpeed = speed;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                xSpeed = speed;
             }
             else if (Input.GetKey(KeyCode.A))
             {
                 xSpeed = -speed;
-                ySpeed = 0.0f;
-            }
-            else if (Input.GetKey(KeyCode.D))
-            {
-                xSpeed = speed;
-                ySpeed = 0.0f;
-            }
-            else
-            {
-                xSpeed = 0.0f;
-                ySpeed = 0.0f;
             }
             rb.velocity = new Vector2(xSpeed, ySpeed); 
         }
 
-        if (Hayaoshi.ATK2 == 0)
+        if (Hayaoshi.ATK1 == 1 && Chase.chaseStart == 1)
         {
             if (Input.GetKey(KeyCode.DownArrow))
             {
-                xSpeed = 0.0f;
                 ySpeed = -speed;
             }
             else if (Input.GetKey(KeyCode.UpArrow))
             {
-                xSpeed = 0.0f;
                 ySpeed = speed;
+            }
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                xSpeed = speed;
             }
             else if (Input.GetKey(KeyCode.LeftArrow))
             {
                 xSpeed = -speed;
-                ySpeed = 0.0f;
-            }
-            else if (Input.GetKey(KeyCode.RightArrow))
-            {
-                xSpeed = speed;
-                ySpeed = 0.0f;
-            }
-            else
-            {
-                xSpeed = 0.0f;
-                ySpeed = 0.0f;
             }
             rb.velocity = new Vector2(xSpeed, ySpeed);
+        }
+    }
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        if (Hayaoshi.ATK1 == 1 && Chase.chaseStart == 0)
+        {
+            Chase.win1 = 1;
+        }
+
+        if (Hayaoshi.ATK2 == 1 && Chase.chaseStart == 0)
+        {
+            Chase.win2 = 1;
         }
     }
 }
