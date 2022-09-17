@@ -152,7 +152,7 @@ public class Hayaoshi : MonoBehaviour
                     else if (ATK2 == 1)//PL2がすでに押しているとき　かつ　PL1が丁度押したとき
                     {
                         dif_calc();
-                        image2_2.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
+                        //image2.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
                         rnd1 = 0;
                     }
                 }
@@ -191,7 +191,7 @@ public class Hayaoshi : MonoBehaviour
                     else if (ATK1 == 1)//PL1がすでに押しているとき　かつ　PL2が丁度押したとき
                     {
                         dif_calc();
-                        image2.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
+                        //image2_2.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
                         rnd1 = 0;
                     }
                 }

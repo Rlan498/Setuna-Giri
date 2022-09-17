@@ -4,59 +4,79 @@ using UnityEngine;
 
 public class Object_Move_def : MonoBehaviour
 {
+    public float speed;//ˆÚ“®‘¬“x
+    private Rigidbody2D rb;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        float xSpeed = 0.0f;
+        float ySpeed = 0.0f;
+
         if (Hayaoshi.ATK1 == 0)
         {
             if (Input.GetKey(KeyCode.S))
             {
-                this.transform.position += new Vector3(0, -0.01f, 0);
+                xSpeed = 0.0f;
+                ySpeed = -speed;
             }
-
-            if (Input.GetKey(KeyCode.W))
+            else if (Input.GetKey(KeyCode.W))
             {
-                this.transform.position += new Vector3(0, 0.01f, 0);
+                xSpeed = 0.0f;
+                ySpeed = speed;
             }
-
-            if (Input.GetKey(KeyCode.A))
+            else if (Input.GetKey(KeyCode.A))
             {
-                this.transform.position += new Vector3(-0.01f, 0, 0);
+                xSpeed = -speed;
+                ySpeed = 0.0f;
             }
-
-            if (Input.GetKey(KeyCode.D))
+            else if (Input.GetKey(KeyCode.D))
             {
-                this.transform.position += new Vector3(0.01f, 0, 0);
+                xSpeed = speed;
+                ySpeed = 0.0f;
             }
+            else
+            {
+                xSpeed = 0.0f;
+                ySpeed = 0.0f;
+            }
+            rb.velocity = new Vector2(xSpeed, ySpeed); 
         }
 
         if (Hayaoshi.ATK2 == 0)
         {
             if (Input.GetKey(KeyCode.DownArrow))
             {
-                this.transform.position += new Vector3(0, -0.01f, 0);
+                xSpeed = 0.0f;
+                ySpeed = -speed;
             }
-
-            if (Input.GetKey(KeyCode.UpArrow))
+            else if (Input.GetKey(KeyCode.UpArrow))
             {
-                this.transform.position += new Vector3(0, 0.01f, 0);
+                xSpeed = 0.0f;
+                ySpeed = speed;
             }
-
-            if (Input.GetKey(KeyCode.LeftArrow))
+            else if (Input.GetKey(KeyCode.LeftArrow))
             {
-                this.transform.position += new Vector3(-0.01f, 0, 0);
+                xSpeed = -speed;
+                ySpeed = 0.0f;
             }
-
-            if (Input.GetKey(KeyCode.RightArrow))
+            else if (Input.GetKey(KeyCode.RightArrow))
             {
-                this.transform.position += new Vector3(0.01f, 0, 0);
+                xSpeed = speed;
+                ySpeed = 0.0f;
             }
+            else
+            {
+                xSpeed = 0.0f;
+                ySpeed = 0.0f;
+            }
+            rb.velocity = new Vector2(xSpeed, ySpeed);
         }
     }
 }

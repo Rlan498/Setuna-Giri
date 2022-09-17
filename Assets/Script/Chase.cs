@@ -25,8 +25,6 @@ public class Chase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Wall.SetActive(true);//壁の起動
-
         if(Hayaoshi.fight == 2)
         {
             Hayaoshi.fight = 3;
@@ -40,6 +38,8 @@ public class Chase : MonoBehaviour
 
     private IEnumerator stream()
     {
+        Wall.SetActive(true);//壁の起動
+
         if (time_start == 0)
         {
             yield break;
@@ -49,14 +49,14 @@ public class Chase : MonoBehaviour
 
         if (Hayaoshi.ATK1 == 1)
         {
-            ATK.transform.position = new Vector3(-3, 0, 0);
-            DEF.transform.position = new Vector3(3, 0, 0);
+            ATK.transform.position = new Vector3(-2, 0, 0);
+            DEF.transform.position = new Vector3(2, 0, 0);
         }
 
         if (Hayaoshi.ATK2 == 1)
         {
-            ATK.transform.position = new Vector3(3, 0, 0);
-            DEF.transform.position = new Vector3(-3, 0, 0);
+            ATK.transform.position = new Vector3(2, 0, 0);
+            DEF.transform.position = new Vector3(-2, 0, 0);
         }
 
         ATK.SetActive(true);
@@ -85,6 +85,8 @@ public class Chase : MonoBehaviour
         yield return new WaitForSeconds(1 + 2 + 10 + 1);//④1秒の結果確認後判定
         ATK.SetActive(false);
         DEF.SetActive(false);
+
+        Wall.SetActive(false);
 
         //当たり判定確認→条件分岐
         if (win1 != 0 && win2 != 0 || Hayaoshi.DEF1 == 3 || Hayaoshi.DEF2 == 3)
