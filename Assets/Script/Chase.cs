@@ -14,12 +14,16 @@ public class Chase : MonoBehaviour
     public static int win2 = 0;
 
     public GameObject Wall;//•Ç
+    GameObject conclusion;
+    GameObject fa;
 
     // Start is called before the first frame update
     void Start()
     {
         ATK.SetActive(false);
         DEF.SetActive(false);
+        conclusion = GameObject.Find("conclusion");
+        fa = GameObject.Find("failed_attack");
     }
 
     // Update is called once per frame
@@ -144,7 +148,7 @@ public class Chase : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(3);//‡C3•b‚ÌŒ‹‰ÊŠm”FŒã”»’è
+        yield return new WaitForSeconds(1);//‡C3•b‚ÌŒ‹‰ÊŠm”FŒã”»’è ¨@1•b‚É’Zk
         ATK.SetActive(false);
         DEF.SetActive(false);
 
@@ -156,7 +160,9 @@ public class Chase : MonoBehaviour
             Hayaoshi.fight = 4;
             x = 5;
             y = 5;
+            conclusion.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
             Debug.Log("Œˆ’…");
+            conclusion.GetComponent<AudioSource>().Play();
 
             yield return new WaitForSeconds(1);//‡DƒŠƒUƒ‹ƒg‚Ì•\¦(êŠ‚ÍˆÚ‚·‚©‚à)
 
@@ -171,6 +177,10 @@ public class Chase : MonoBehaviour
         }
         else
         {
+            fa.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
+            fa.GetComponent<AudioSource>().Play();
+            yield return new WaitForSeconds(2);
+            fa.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);
             Hayaoshi.fight = 0;
             Debug.Log("Œ©Ø‚è‚ÉˆÚs");
         }

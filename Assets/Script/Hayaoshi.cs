@@ -19,6 +19,7 @@ public class Hayaoshi : MonoBehaviour
     int stop = 0;
 
     GameObject Mark;
+    GameObject PUSH;
     GameObject image1;
     GameObject image2;
     GameObject image2_2;
@@ -27,11 +28,13 @@ public class Hayaoshi : MonoBehaviour
     bool pena = false;
     public static float timer = 0;//入力差を格納する変数
     int time_start = 0;//1の時に入力タイミングの差を計測 2で終了する処理
+    int push = 0;//pushの表示関係
 
     // Start is called before the first frame update
     void Start()
     {
         Mark = GameObject.Find("Mark");
+        PUSH = GameObject.Find("PUSH");
         image1 = GameObject.Find("image1");
         image2 = GameObject.Find("image2");
         image2_2 = GameObject.Find("image2_2");
@@ -107,6 +110,12 @@ public class Hayaoshi : MonoBehaviour
             //ここから見切りの処理
             if ((ready1 == 1 && ready2 == 1 && ready == 0) || reset == 1)
             {
+                if(push == 0)
+                {
+                    PUSH.GetComponent<AudioSource>().Play();
+                    PUSH.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);
+                    push = 1;
+                }
                 if (pena == false)
                 {
                     pena = true;
@@ -154,6 +163,7 @@ public class Hayaoshi : MonoBehaviour
                         dif_calc();
                         //image2.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
                         rnd1 = 0;
+                        this.GetComponent<AudioSource>().Play();
                     }
                 }
             }
@@ -193,6 +203,7 @@ public class Hayaoshi : MonoBehaviour
                         dif_calc();
                         //image2_2.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
                         rnd1 = 0;
+                        this.GetComponent<AudioSource>().Play();
                     }
                 }
             }
@@ -212,6 +223,7 @@ public class Hayaoshi : MonoBehaviour
             fight = 1;
             //ここに「！」画像表示の記述
             Mark.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
+            Mark.GetComponent<AudioSource>().Play();
             Debug.Log("！");
         }
     }
