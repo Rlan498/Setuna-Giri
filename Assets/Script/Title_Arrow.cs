@@ -7,7 +7,7 @@ public class Title_Arrow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        //このスクリプトは選択肢の位置を表示するものです
     }
 
     // Update is called once per frame

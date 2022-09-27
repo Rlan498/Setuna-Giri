@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Chase : MonoBehaviour
 {
@@ -164,15 +165,17 @@ public class Chase : MonoBehaviour
             Debug.Log("決着");
             conclusion.GetComponent<AudioSource>().Play();
 
-            yield return new WaitForSeconds(1);//⑤リザルトの表示(場所は移すかも)
+            yield return new WaitForSeconds(2);//⑤リザルトの表示(場所は移すかも)
 
             if (win1 == 1 || (win2 == 0 && Hayaoshi.DEF1 == 3))
             {
                 Debug.Log("PL1の勝利です");
+                SceneManager.LoadScene("Result");
             }
             else if (win2 == 1 || (win1 == 0 && Hayaoshi.DEF2 == 3))
             {
                 Debug.Log("PL2の勝利です");
+                SceneManager.LoadScene("Result");
             }
         }
         else

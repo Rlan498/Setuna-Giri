@@ -23,17 +23,17 @@ public class Title_Select : MonoBehaviour
         {
             place -= 1;
         } else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter)){//決定が押された時の処理
-            if(place == 0)
+            if(place == 0)//始めるを選択
             {
                 this.GetComponent<AudioSource>().Play();
                 StartCoroutine("wait");
             }
-            else if(place == 1)
+            else if(place == 1)//操作説明を選択
             {
                 this.GetComponent<AudioSource>().Play();
 
             }
-            else if(place == 2)
+            else if(place == 2)//ゲーム終了を選択
             {
                 UnityEditor.EditorApplication.isPlaying = false;
                 Application.Quit();
