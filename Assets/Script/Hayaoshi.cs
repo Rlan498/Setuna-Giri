@@ -1,34 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Hayaoshi : MonoBehaviour
 {
     float rnd1 = 0.0f;
-    int ready1 = 0;
-    int ready2 = 0;
-    int ready = 0;
+    public static int ready1 = 0;
+    public static int ready2 = 0;
+    public static int ready = 0;
     public static int fight = 0;
-    int pena1 = 0;
-    int pena2 = 0;
+    public static int pena1 = 0;
+    public static int pena2 = 0;
     public static int DEF1 = 0;
     public static int DEF2 = 0;
     public static int ATK1 = 0;
     public static int ATK2 = 0;
-    int reset = 0;
-    int stop = 0;
+    public static int reset = 0;
+    public static int stop = 0;
 
     GameObject Mark;
     GameObject PUSH;
     GameObject image1;
     GameObject image2;
     GameObject image2_2;
+
+    //リザルト用変数
+    public static string[] fight_array = new string[5];//見切りの勝利者格納用配列
+    public static float[] time_array = new float[5];//入力差の格納用配列
+    public static int i = 0;//試合の度に+1(配列への勝敗入力用)
     
     int count = 0;//ただの確認のための変数　後々消してヨシ
-    bool pena = false;
+    public static bool pena = false;
     public static float timer = 0;//入力差を格納する変数
-    int time_start = 0;//1の時に入力タイミングの差を計測 2で終了する処理
-    int push = 0;//pushの表示関係
+    public static int time_start = 0;//1の時に入力タイミングの差を計測 2で終了する処理
+    public static int push = 0;//pushの表示関係
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +46,6 @@ public class Hayaoshi : MonoBehaviour
         image1 = GameObject.Find("image1");
         image2 = GameObject.Find("image2");
         image2_2 = GameObject.Find("image2_2");
-        Debug.Log("準備完了したら　PL1:S  PL2:↓");
     }
 
     // Update is called once per frame
@@ -86,7 +93,6 @@ public class Hayaoshi : MonoBehaviour
             //ここの数値の変更→見切りの秒数変更
 
             rnd1 = rnd;
-
             if (Input.GetKey(KeyCode.S) && ready1 == 0)
             {
                 ready1 = 1;
@@ -138,12 +144,16 @@ public class Hayaoshi : MonoBehaviour
                         reset = 1;//罰則値追加前にresetに1を代入 = 連続でペナ対策  見切り前へ
                         pena1 = pena1 + 1;//PL1に罰則値を追加
                         pena = false;//見合いの連続対策のため
-                        Debug.Log("PL1 フライング" + pena1 + "回目");
+                        Debug.Log(i + "　PL1 フライング" + pena1 + "回目");
                     }
                     else//フライング回数でのペナルティ設定
                     {
                         reset = 2;
+                        pena1 = pena1 + 1;
+                        fight_array[i] = "PL1 ペナルティ負け";
                         Debug.Log("PL1 フライング3回目　負け");
+                        i++;
+                        StartCoroutine("wait_result");
                     }
                 }
                 else
@@ -156,7 +166,8 @@ public class Hayaoshi : MonoBehaviour
                         time_start += 1;
                         DEF2 += 1;
                         //攻防シーンでのPL2の守備回数を記録
-                        Debug.Log("PL1 勝ち");
+                        fight_array[i] = "PL1";
+                        Debug.Log(i + "　PL1 勝ち");
                     }
                     else if (ATK2 == 1)//PL2がすでに押しているとき　かつ　PL1が丁度押したとき
                     {
@@ -178,12 +189,16 @@ public class Hayaoshi : MonoBehaviour
                         reset = 1;//見切り前へ
                         pena2 = pena2 + 1;//PL2に罰則値を追加
                         pena = false;
-                        Debug.Log("PL2 フライング" + pena2 + "回目");
+                        Debug.Log(i + "　PL2 フライング" + pena2 + "回目");
                     }
                     else//フライング回数でのペナルティ設定
                     {
                         reset = 2;
+                        pena1 = pena1 + 1;
+                        fight_array[i] = "PL2 ペナルティ負け";
                         Debug.Log("PL2 フライング3回目　負け");
+                        i++;
+                        StartCoroutine("wait_result");
                     }
                 }
                 else
@@ -196,7 +211,9 @@ public class Hayaoshi : MonoBehaviour
                         time_start += 1;
                         DEF1 += 1;
                         //PL1の防御回数を記録
-                        Debug.Log("PL2 勝ち");
+
+                        fight_array[i] = "PL2";
+                        Debug.Log(i + "　PL2 勝ち");
                     }
                     else if (ATK1 == 1)//PL1がすでに押しているとき　かつ　PL2が丁度押したとき
                     {
@@ -232,6 +249,9 @@ public class Hayaoshi : MonoBehaviour
     {
         time_start += 1;
         fight += 1;//この処理でfightは2のはず
+
+        time_array[i] = timer;
+        i += 1;
         Debug.Log("入力タイミングの差は" + timer + "でした");
         Mark.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);
         image1.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);//image1 消去
@@ -242,8 +262,14 @@ public class Hayaoshi : MonoBehaviour
         //お見合いの処理的な場所
         yield return new WaitForSeconds(1.0f);
         count += 1;
-        Debug.Log(count + "回目、構え！！！");
+        Debug.Log(i + "　" + count + "回目、構え！！！");
         ready = 1;
         reset = 0;
+    }
+
+    private IEnumerator wait_result()
+    {
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene("Result");//リザルト画面へ
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -52,6 +53,33 @@ public class Title_Select : MonoBehaviour
     private IEnumerator wait()
     {
         yield return new WaitForSeconds(1);
+
+        Hayaoshi.fight = 0;
+        Hayaoshi.ready1 = 0;
+        Hayaoshi.ready2 = 0;
+        Hayaoshi.ready = 0;
+        Hayaoshi.pena1 = 0;
+        Hayaoshi.pena2 = 0;
+        Hayaoshi.reset = 0;
+        Hayaoshi.DEF1 = 0;
+        Hayaoshi.DEF2 = 0;
+        Hayaoshi.ATK1 = 0;
+        Hayaoshi.ATK2 = 0;
+        Hayaoshi.stop = 0;
+        Hayaoshi.pena = false;
+        Hayaoshi.push = 0;
+        Hayaoshi.time_start = 0;
+
+        Chase.time_start = 1;
+        Chase.win1 = 0;
+        Chase.win2 = 0;
+
+        Array.Clear(Hayaoshi.fight_array, 0, Hayaoshi.fight_array.Length);
+        Array.Clear(Hayaoshi.time_array, 0, Hayaoshi.time_array.Length);
+        Hayaoshi.i = 0;
+
+        Result.stop = 0;
+
         SceneManager.LoadScene("SampleScene");
     }
 }

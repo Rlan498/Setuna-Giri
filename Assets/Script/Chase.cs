@@ -10,7 +10,7 @@ public class Chase : MonoBehaviour
 
     
     public static int chaseStart = 0;//1‚É‚È‚é‚ÆU–hŠJn
-    int time_start = 1;
+    public static int time_start = 1;
     public static int win1 = 0;
     public static int win2 = 0;
 
@@ -66,7 +66,11 @@ public class Chase : MonoBehaviour
 
         ATK.SetActive(true);
 
-        if(Hayaoshi.ATK1 == 1 && Hayaoshi.DEF2 == 2 || Hayaoshi.ATK2 == 1 && Hayaoshi.DEF1 == 2)
+        if (Hayaoshi.ATK1 == 1 && Hayaoshi.DEF2 == 1 || Hayaoshi.ATK2 == 1 && Hayaoshi.DEF1 == 1)
+        {
+            DEF.transform.localScale = new Vector2(5.0f, 5.0f);//1‰ñ–Ú‚Ìç”õ‘¤‚Ì‘å‚«‚³
+        }
+        if (Hayaoshi.ATK1 == 1 && Hayaoshi.DEF2 == 2 || Hayaoshi.ATK2 == 1 && Hayaoshi.DEF1 == 2)
         {
             DEF.transform.localScale = new Vector2(4.0f, 4.0f);//2‰ñ–Ú‚Ìç”õ‘¤‚Ì‘å‚«‚³
         }
