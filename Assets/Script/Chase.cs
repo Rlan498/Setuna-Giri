@@ -18,6 +18,8 @@ public class Chase : MonoBehaviour
     GameObject conclusion;
     GameObject fa;
 
+    public static string[] attack_array = new string[5];
+
     // Start is called before the first frame update
     void Start()
     {
@@ -151,6 +153,17 @@ public class Chase : MonoBehaviour
                     win2 = 1;
                 }
             }
+        }
+
+        if (win1 == 1 || win2 == 1)
+        {
+
+            attack_array[Hayaoshi.i-1] = "UŒ‚¬Œ÷";
+        }
+        else
+        {
+
+            attack_array[Hayaoshi.i-1] = "UŒ‚¸”s";
         }
 
         yield return new WaitForSeconds(1);//‡C3•b‚ÌŒ‹‰ÊŠm”FŒã”»’è ¨@1•b‚É’Zk

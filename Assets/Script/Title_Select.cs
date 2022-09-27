@@ -73,9 +73,10 @@ public class Title_Select : MonoBehaviour
         Chase.time_start = 1;
         Chase.win1 = 0;
         Chase.win2 = 0;
-
+        
         Array.Clear(Hayaoshi.fight_array, 0, Hayaoshi.fight_array.Length);
         Array.Clear(Hayaoshi.time_array, 0, Hayaoshi.time_array.Length);
+        Array.Clear(Chase.attack_array, 0, Chase.attack_array.Length);
         Hayaoshi.i = 0;
 
         Result.stop = 0;

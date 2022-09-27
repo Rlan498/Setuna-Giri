@@ -26,11 +26,11 @@ public class Result : MonoBehaviour
         {
             stop = 1;
 
-            if (Chase.win1 == 1 || Hayaoshi.pena2 == 3)
+            if (Chase.win1 == 1 || (Chase.win2 == 0 && Hayaoshi.DEF1 == 3) || Hayaoshi.pena2 == 3)
             {
                 PL1.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);//WINを表示
             }
-            else if (Chase.win2 == 1 || Hayaoshi.pena1 == 3)
+            else if (Chase.win2 == 1 || (Chase.win1 == 0 && Hayaoshi.DEF2 == 3) || Hayaoshi.pena1 == 3)
             {
                 PL2.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
             }
@@ -46,7 +46,7 @@ public class Result : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log(j + 1 + "回目：攻撃側　" + Hayaoshi.fight_array[j] + "入力差　" + Hayaoshi.time_array[j]);
+                    Debug.Log(j + 1 + "回目：攻撃側　" + Hayaoshi.fight_array[j] + "　入力差　" + Hayaoshi.time_array[j] + "　" + Chase.attack_array[j]);
                 }
             }
 
