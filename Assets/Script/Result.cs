@@ -56,7 +56,7 @@ public class Result : MonoBehaviour
         }
         if(push == 1)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter))
             {
                 SceneManager.LoadScene("Title");
             }
