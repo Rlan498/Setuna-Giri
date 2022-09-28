@@ -23,7 +23,7 @@ public class Title_Select : MonoBehaviour
         } else if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))//選択肢　上に
         {
             place -= 1;
-        } else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter)){//決定が押された時の処理
+        } else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return)){//決定が押された時の処理
             if(place == 0)//始めるを選択
             {
                 this.GetComponent<AudioSource>().Play();
