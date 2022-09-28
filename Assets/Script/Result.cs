@@ -8,10 +8,12 @@ public class Result : MonoBehaviour
     public static int stop = 0;
     GameObject PL1;
     GameObject PL2;
+    int push;
 
     // Start is called before the first frame update
     void Start()
     {
+        push = 0;
         PL1 = GameObject.Find("PL1_WIN");//PL1にゲームオブジェクトPL1_WINを結び付け
         PL2 = GameObject.Find("PL2_WIN");
         PL1.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);//WINを透明化
@@ -52,11 +54,18 @@ public class Result : MonoBehaviour
 
             StartCoroutine("wait");
         }
+        if(push == 1)
+        {
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter))
+            {
+                SceneManager.LoadScene("Title");
+            }
+        }
     }
 
     private IEnumerator wait()
     {
-        yield return new WaitForSeconds(5);
-        SceneManager.LoadScene("Title");//タイトルに戻る
+        yield return new WaitForSeconds(1);
+        push = 1;
     }
 }
