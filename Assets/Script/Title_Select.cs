@@ -36,7 +36,7 @@ public class Title_Select : MonoBehaviour
             }
             else if(place == 2)//ƒQ[ƒ€I—¹‚ğ‘I‘ğ
             {
-                UnityEditor.EditorApplication.isPlaying = false;
+                //UnityEditor.EditorApplication.isPlaying = false;
                 Application.Quit();
             }
         }

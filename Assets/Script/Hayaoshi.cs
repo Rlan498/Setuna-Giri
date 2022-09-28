@@ -93,14 +93,14 @@ public class Hayaoshi : MonoBehaviour
             //ここの数値の変更→見切りの秒数変更
 
             rnd1 = rnd;
-            if (Input.GetKey(KeyCode.S) && ready1 == 0)
+            if (Input.GetKeyDown(KeyCode.S) && ready1 == 0)
             {
                 ready1 = 1;
                 //PL1準備
                 Debug.Log("PL1 準備完了");
             }
 
-            if (Input.GetKey(KeyCode.DownArrow) && ready2 == 0)
+            if (Input.GetKeyDown(KeyCode.DownArrow) && ready2 == 0)
             {
                 ready2 = 1;
                 //PL2準備
@@ -134,7 +134,7 @@ public class Hayaoshi : MonoBehaviour
                 /*Debug.Log("秒数は" + rnd1);*/
             }
 
-            if (Input.GetKey(KeyCode.S) && ready == 1 && reset == 0)
+            if (Input.GetKeyDown(KeyCode.S) && ready == 1 && reset == 0)
             {
                 if (fight == 0)
                 {
@@ -179,7 +179,7 @@ public class Hayaoshi : MonoBehaviour
                 }
             }
 
-            if (Input.GetKey(KeyCode.DownArrow) && ready == 1 && reset == 0)
+            if (Input.GetKeyDown(KeyCode.DownArrow) && ready == 1 && reset == 0)
             {
                 if (fight == 0)
                 {
@@ -194,7 +194,7 @@ public class Hayaoshi : MonoBehaviour
                     else//フライング回数でのペナルティ設定
                     {
                         reset = 2;
-                        pena1 = pena1 + 1;
+                        pena2 = pena2 + 1;//ここが元々はpena1 = pena1 + 1;だった
                         fight_array[i] = "PL2 ペナルティ負け";
                         Debug.Log("PL2 フライング3回目　負け");
                         i++;
