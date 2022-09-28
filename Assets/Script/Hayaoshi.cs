@@ -75,8 +75,6 @@ public class Hayaoshi : MonoBehaviour
             ready2 = 1;
             ready = 0;
             fight = 0;
-            pena1 = 0;//ペナルティはリセットすべきか要相談？
-            pena2 = 0;//毎回3回まで or 通算5回(仮)まで？
             ATK1 = 0;
             ATK2 = 0;
             reset = 0;
