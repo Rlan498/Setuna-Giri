@@ -19,6 +19,7 @@ public class Hayaoshi : MonoBehaviour
     public static int ATK2 = 0;
     public static int reset = 0;
     public static int stop = 0;
+    public static int go = 0;
 
     GameObject Mark;
     GameObject PUSH;
@@ -35,8 +36,8 @@ public class Hayaoshi : MonoBehaviour
     public static string[] fight_array = new string[5];//見切りの勝利者格納用配列
     public static float[] time_array = new float[5];//入力差の格納用配列
     public static int i = 0;//試合の度に+1(配列への勝敗入力用)
-    
-    int count = 0;//ただの確認のための変数　後々消してヨシ
+
+    public static int count = 0;//ただの確認のための変数　後々消してヨシ
     public static bool pena = false;
     public static float timer = 0;//入力差を格納する変数
     public static int time_start = 0;//1の時に入力タイミングの差を計測 2で終了する処理
@@ -86,7 +87,7 @@ public class Hayaoshi : MonoBehaviour
             ATK1 = 0;
             ATK2 = 0;
             reset = 0;
-            count = 0;
+            //count = 0;
             pena = false;
             timer = 0;
             time_start = 0;
@@ -94,6 +95,19 @@ public class Hayaoshi : MonoBehaviour
 
         if (fight < 2)
         {
+            if (fight == 0)
+            {
+                if (pena1 == 0)
+                {
+                    PL1_p.text = "PL1  ○○";
+                }
+
+                if (pena2 == 0)
+                {
+                    PL2_p.text = "PL2  ○○";
+                }
+            }
+
             float rnd = Random.Range(4.0f, 10.0f);
             // ※ 4.0～10.0の範囲でランダムな小数点数値が返る
             //ここの数値の変更→見切りの秒数変更
@@ -127,17 +141,20 @@ public class Hayaoshi : MonoBehaviour
                     PUSH.GetComponent<AudioSource>().Play();
                     PUSH.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);
                     push = 1;
+                    StartCoroutine("wait_only");
                 }
-                if (pena == false)
+                if (go == 1)
                 {
-                    pena = true;
-                    StartCoroutine(wait());//本家で言う所のカットインの役割
+                    if (pena == false)
+                    {
+                        pena = true;
+                        StartCoroutine(wait());//本家で言う所のカットインの役割
+                    }
+                
+                    Invoke("Exclamation", rnd1);
+                    //両者準備完了からrnd秒後にExclamation関数が実行
+                    /*Debug.Log("秒数は" + rnd1);*/
                 }
-
-                Debug.Log("双方の準備完了");
-                Invoke("Exclamation", rnd1);
-                //両者準備完了からrnd秒後にExclamation関数が実行
-                /*Debug.Log("秒数は" + rnd1);*/
             }
 
             if (Input.GetKeyDown(KeyCode.S) && ready == 1 && reset == 0)
@@ -270,7 +287,12 @@ public class Hayaoshi : MonoBehaviour
         image1.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);//image1 消去
     }
 
-    IEnumerator wait()
+    private IEnumerator wait_only()
+    {
+        yield return new WaitForSeconds(3.5f);
+        go = 1;
+    }
+    private IEnumerator wait()
     {
         //お見合いの処理的な場所
         yield return new WaitForSeconds(0.1f);
@@ -297,14 +319,28 @@ public class Hayaoshi : MonoBehaviour
         BGM.count = 0;
         back.GetComponent<AudioSource>().Play();
         Mr_text.text = " ";//n goume が表示されていた場合、それを消去するためのもの
-        if (pena1 > 0)//penaが発生した場合に、その数を表示する処理
+        
+        //penaが発生した場合に、その数を表示する処理        
+        //PL1_p.text = "PL1 pena = " + pena1;
+        if (pena1 == 1)
         {
-            PL1_p.text = "PL1 pena = " + pena1;
+            PL1_p.text = "PL1  ×○";
         }
-        if (pena2 > 0)
+        if(pena1 >= 2)
         {
-            PL2_p.text = "PL2 pena = " + pena2;
+            PL1_p.text = "PL1  ××";
         }
+                
+        //PL2_p.text = "PL2 pena = " + pena2;
+        if (pena2 == 1)
+        {
+            PL2_p.text = "PL2  ×○";
+        }
+        if (pena2 >= 2)
+        {
+            PL2_p.text = "PL2  ××";
+        }
+        
         pena_obj.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);//お手付きを表示
         yield return new WaitForSeconds(3);
         pena_obj.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);//お手付きを消去

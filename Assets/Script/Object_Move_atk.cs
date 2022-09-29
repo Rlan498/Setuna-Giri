@@ -21,18 +21,18 @@ public class Object_Move_atk : MonoBehaviour
 
         if (Chase.chaseStart == 0)
         {
-            speed = 10;
+            speed = 7.5f;
             rb.velocity = new Vector2(0.0f, 0.0f);
         }
 
 
         if (Chase.chaseStart == 1)
         {
-            if (speed == 10)
+            if (speed == 7.5)
             {
-                if (Hayaoshi.timer <= 0.2) //‘¬‚³‚ÌãŒÀ
+                if (Hayaoshi.timer <= 0.4) //‘¬‚³‚ÌãŒÀ
                 {
-                    speed = speed + 12.5f * Hayaoshi.timer;
+                    speed = speed + 6.25f * Hayaoshi.timer;
                 }
                 else
                 {
