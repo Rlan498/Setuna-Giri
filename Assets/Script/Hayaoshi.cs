@@ -282,14 +282,6 @@ public class Hayaoshi : MonoBehaviour
         reset = 0;
         yield return new WaitForSeconds(2.0f);
         Mr_text.text = " ";
-        if(pena1 > 0)
-        {
-            PL1_p.text = "PL1 pena = " + pena1;
-        }
-        if (pena2 > 0)
-        {
-            PL2_p.text = "PL2 pena = " + pena2;
-        }
     }
 
     private IEnumerator wait_result()
@@ -305,6 +297,14 @@ public class Hayaoshi : MonoBehaviour
         BGM.count = 0;
         back.GetComponent<AudioSource>().Play();
         Mr_text.text = " ";
+        if (pena1 > 0)
+        {
+            PL1_p.text = "PL1 pena = " + pena1;
+        }
+        if (pena2 > 0)
+        {
+            PL2_p.text = "PL2 pena = " + pena2;
+        }
         pena_obj.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
         yield return new WaitForSeconds(3);
         pena_obj.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);
