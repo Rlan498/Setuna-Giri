@@ -17,6 +17,8 @@ public class Chase : MonoBehaviour
     public GameObject Wall;//ï«
     GameObject conclusion;
     GameObject fa;
+    GameObject y_d;
+    GameObject y_a;
 
     public static string[] attack_array = new string[5];
 
@@ -27,6 +29,8 @@ public class Chase : MonoBehaviour
         DEF.SetActive(false);
         conclusion = GameObject.Find("conclusion");
         fa = GameObject.Find("failed_attack");
+        y_d = GameObject.Find("you_def");
+        y_a = GameObject.Find("you_atk");
     }
 
     // Update is called once per frame
@@ -58,12 +62,20 @@ public class Chase : MonoBehaviour
         {
             ATK.transform.position = new Vector2(-2, 0);
             DEF.transform.position = new Vector2(2, 0);
+            y_d.transform.position = new Vector2(8, 0);
+            y_a.transform.position = new Vector2(-8, 0);
+            y_d.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
+            y_a.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
         }
 
         if (Hayaoshi.ATK2 == 1)
         {
             ATK.transform.position = new Vector2(2, 0);
             DEF.transform.position = new Vector2(-2, 0);
+            y_d.transform.position = new Vector2(-8, 0);
+            y_a.transform.position = new Vector2(8, 0);
+            y_d.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
+            y_a.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
         }
 
         ATK.SetActive(true);
@@ -92,6 +104,8 @@ public class Chase : MonoBehaviour
         yield return new WaitForSeconds(10);//áB10ïbÇ≈çUñhèIóπ
         chaseStart = 0;
         Debug.Log("çUñhèIóπ");
+        y_d.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);
+        y_a.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);
 
         Vector2 ATK_position = GameObject.Find("attacker").transform.position;
         Vector2 DEF_position = GameObject.Find("defender").transform.position;

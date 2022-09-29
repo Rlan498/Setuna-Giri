@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class Hayaoshi : MonoBehaviour
 {
@@ -24,6 +25,11 @@ public class Hayaoshi : MonoBehaviour
     GameObject image1;
     GameObject image2;
     GameObject image2_2;
+    GameObject pena_obj;
+    GameObject back;
+    public TextMeshProUGUI Mr_text;
+    public TextMeshProUGUI PL1_p;
+    public TextMeshProUGUI PL2_p;
 
     //リザルト用変数
     public static string[] fight_array = new string[5];//見切りの勝利者格納用配列
@@ -46,6 +52,8 @@ public class Hayaoshi : MonoBehaviour
         image1 = GameObject.Find("image1");
         image2 = GameObject.Find("image2");
         image2_2 = GameObject.Find("image2_2");
+        pena_obj = GameObject.Find("pena");
+        back = GameObject.Find("back");
     }
 
     // Update is called once per frame
@@ -139,10 +147,11 @@ public class Hayaoshi : MonoBehaviour
                     if (pena1 < 2)//ペナルティはここのn+1回目
                     {
                         StopAllCoroutines();
-                        reset = 1;//罰則値追加前にresetに1を代入 = 連続でペナ対策  見切り前へ
+                        //reset = 1;//罰則値追加前にresetに1を代入 = 連続でペナ対策  見切り前へ
                         pena1 = pena1 + 1;//PL1に罰則値を追加
                         pena = false;//見合いの連続対策のため
                         Debug.Log(i + "　PL1 フライング" + pena1 + "回目");
+                        StartCoroutine("pena_dis");
                     }
                     else//フライング回数でのペナルティ設定
                     {
@@ -166,6 +175,9 @@ public class Hayaoshi : MonoBehaviour
                         //攻防シーンでのPL2の守備回数を記録
                         fight_array[i] = "PL1";
                         Debug.Log(i + "　PL1 勝ち");
+                        PL1_p.text = " ";
+                        PL2_p.text = " ";
+
                     }
                     else if (ATK2 == 1)//PL2がすでに押しているとき　かつ　PL1が丁度押したとき
                     {
@@ -184,10 +196,11 @@ public class Hayaoshi : MonoBehaviour
                     if (pena2 < 2)//ペナルティはここのn+1回目
                     {
                         StopAllCoroutines();
-                        reset = 1;//見切り前へ
+                        //reset = 1;//見切り前へ
                         pena2 = pena2 + 1;//PL2に罰則値を追加
                         pena = false;
                         Debug.Log(i + "　PL2 フライング" + pena2 + "回目");
+                        StartCoroutine("pena_dis");
                     }
                     else//フライング回数でのペナルティ設定
                     {
@@ -212,6 +225,8 @@ public class Hayaoshi : MonoBehaviour
 
                         fight_array[i] = "PL2";
                         Debug.Log(i + "　PL2 勝ち");
+                        PL1_p.text = " ";
+                        PL2_p.text = " ";
                     }
                     else if (ATK1 == 1)//PL1がすでに押しているとき　かつ　PL2が丁度押したとき
                     {
@@ -258,16 +273,41 @@ public class Hayaoshi : MonoBehaviour
     IEnumerator wait()
     {
         //お見合いの処理的な場所
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.1f);
         count += 1;
         Debug.Log(i + "　" + count + "回目、構え！！！");
+        Mr_text.text = count + "goume";
+        pena_obj.GetComponent<AudioSource>().Play();
         ready = 1;
         reset = 0;
+        yield return new WaitForSeconds(2.0f);
+        Mr_text.text = " ";
+        if(pena1 > 0)
+        {
+            PL1_p.text = "PL1 pena = " + pena1;
+        }
+        if (pena2 > 0)
+        {
+            PL2_p.text = "PL2 pena = " + pena2;
+        }
     }
 
     private IEnumerator wait_result()
     {
         yield return new WaitForSeconds(2);
         SceneManager.LoadScene("Result");//リザルト画面へ
+    }
+
+    private IEnumerator pena_dis()
+    {
+        reset = -1;
+        CancelInvoke();
+        BGM.count = 0;
+        back.GetComponent<AudioSource>().Play();
+        Mr_text.text = " ";
+        pena_obj.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
+        yield return new WaitForSeconds(3);
+        pena_obj.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);
+        reset = 1;
     }
 }
