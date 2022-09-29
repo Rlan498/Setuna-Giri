@@ -175,7 +175,7 @@ public class Hayaoshi : MonoBehaviour
                         //攻防シーンでのPL2の守備回数を記録
                         fight_array[i] = "PL1";
                         Debug.Log(i + "　PL1 勝ち");
-                        PL1_p.text = " ";
+                        PL1_p.text = " ";//追いかけっこに移るためpenaを一時的に消去
                         PL2_p.text = " ";
 
                     }
@@ -225,7 +225,7 @@ public class Hayaoshi : MonoBehaviour
 
                         fight_array[i] = "PL2";
                         Debug.Log(i + "　PL2 勝ち");
-                        PL1_p.text = " ";
+                        PL1_p.text = " ";//追いかけっこに移るためpenaを一時的に消去
                         PL2_p.text = " ";
                     }
                     else if (ATK1 == 1)//PL1がすでに押しているとき　かつ　PL2が丁度押したとき
@@ -276,7 +276,7 @@ public class Hayaoshi : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         count += 1;
         Debug.Log(i + "　" + count + "回目、構え！！！");
-        Mr_text.text = count + "goume";
+        Mr_text.text = count + "goume";//TextMeshProで何回目の攻撃か表示
         pena_obj.GetComponent<AudioSource>().Play();
         ready = 1;
         reset = 0;
@@ -292,12 +292,12 @@ public class Hayaoshi : MonoBehaviour
 
     private IEnumerator pena_dis()
     {
-        reset = -1;
-        CancelInvoke();
+        reset = -1;//処理中に連続ペナが引き起るのを防ぐための処置
+        CancelInvoke();//何故か！が処理中に出たので、それを防ぐための処理
         BGM.count = 0;
         back.GetComponent<AudioSource>().Play();
-        Mr_text.text = " ";
-        if (pena1 > 0)
+        Mr_text.text = " ";//n goume が表示されていた場合、それを消去するためのもの
+        if (pena1 > 0)//penaが発生した場合に、その数を表示する処理
         {
             PL1_p.text = "PL1 pena = " + pena1;
         }
@@ -305,9 +305,9 @@ public class Hayaoshi : MonoBehaviour
         {
             PL2_p.text = "PL2 pena = " + pena2;
         }
-        pena_obj.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
+        pena_obj.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);//お手付きを表示
         yield return new WaitForSeconds(3);
-        pena_obj.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);
+        pena_obj.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);//お手付きを消去
         reset = 1;
     }
 }
