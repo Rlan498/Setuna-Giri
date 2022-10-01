@@ -24,6 +24,9 @@ public class BGM : MonoBehaviour
         {
             this.GetComponent<AudioSource>().Stop();
             count = 0;
+        }else if(count == -1)
+        {
+            this.GetComponent<AudioSource>().Stop();
         }
     }
 }

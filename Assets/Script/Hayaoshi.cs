@@ -28,6 +28,8 @@ public class Hayaoshi : MonoBehaviour
     GameObject image2_2;
     GameObject pena_obj;
     GameObject back;
+    GameObject pena_se;
+    GameObject pena_fini;
     public TextMeshProUGUI Mr_text;
     public TextMeshProUGUI PL1_p;
     public TextMeshProUGUI PL2_p;
@@ -55,6 +57,8 @@ public class Hayaoshi : MonoBehaviour
         image2_2 = GameObject.Find("image2_2");
         pena_obj = GameObject.Find("pena");
         back = GameObject.Find("back");
+        pena_se = GameObject.Find("pena_se");
+        pena_fini = GameObject.Find("pena_fini");
     }
 
     // Update is called once per frame
@@ -91,6 +95,7 @@ public class Hayaoshi : MonoBehaviour
             pena = false;
             timer = 0;
             time_start = 0;
+            BGM.count = 0;
         }
 
         if (fight < 2)
@@ -99,12 +104,28 @@ public class Hayaoshi : MonoBehaviour
             {
                 if (pena1 == 0)
                 {
-                    PL1_p.text = "PL1  ○○";
+                    PL1_p.text = "PL1  ○○○";
+                }
+                else if (pena1 == 1)
+                {
+                    PL1_p.text = "PL1  ×○○";
+                }
+                else if (pena1 >= 2)
+                {
+                    PL1_p.text = "PL1  ××○";
                 }
 
                 if (pena2 == 0)
                 {
-                    PL2_p.text = "PL2  ○○";
+                    PL2_p.text = "PL2  ○○○";
+                }
+                else if (pena2 == 1)
+                {
+                    PL2_p.text = "PL2  ×○○";
+                }
+                else if (pena2 >= 2)
+                {
+                    PL2_p.text = "PL2  ××○";
                 }
             }
 
@@ -177,7 +198,7 @@ public class Hayaoshi : MonoBehaviour
                         fight_array[i] = "PL1 ペナルティ負け";
                         Debug.Log("PL1 フライング3回目　負け");
                         i++;
-                        StartCoroutine("wait_result");
+                        StartCoroutine("pena_dis");
                     }
                 }
                 else
@@ -226,7 +247,7 @@ public class Hayaoshi : MonoBehaviour
                         fight_array[i] = "PL2 ペナルティ負け";
                         Debug.Log("PL2 フライング3回目　負け");
                         i++;
-                        StartCoroutine("wait_result");
+                        StartCoroutine("pena_dis");
                     }
                 }
                 else
@@ -298,7 +319,7 @@ public class Hayaoshi : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         count += 1;
         Debug.Log(i + "　" + count + "回目、構え！！！");
-        Mr_text.text = count + "goume";//TextMeshProで何回目の攻撃か表示
+        Mr_text.text = count + "合目";//TextMeshProで何回目の攻撃か表示
         pena_obj.GetComponent<AudioSource>().Play();
         ready = 1;
         reset = 0;
@@ -316,34 +337,54 @@ public class Hayaoshi : MonoBehaviour
     {
         reset = -1;//処理中に連続ペナが引き起るのを防ぐための処置
         CancelInvoke();//何故か！が処理中に出たので、それを防ぐための処理
-        BGM.count = 0;
-        back.GetComponent<AudioSource>().Play();
-        Mr_text.text = " ";//n goume が表示されていた場合、それを消去するためのもの
-        
-        //penaが発生した場合に、その数を表示する処理        
-        //PL1_p.text = "PL1 pena = " + pena1;
-        if (pena1 == 1)
+        if(pena1 >= 3 || pena2 >= 3)
         {
-            PL1_p.text = "PL1  ×○";
+            BGM.count = -1;
+            Mr_text.text = " ";
+            pena_se.GetComponent<AudioSource>().Play();
+            if(pena1 >= 3)
+            {
+                PL1_p.text = "PL1  ×××";
+            }
+            if(pena2 >= 3)
+            {
+                PL2_p.text = "PL1  ×××";
+            }
+            pena_fini.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);//お手付きを表示
+            yield return new WaitForSeconds(3);
+            StartCoroutine("wait_result");
         }
-        if(pena1 >= 2)
+        else
         {
-            PL1_p.text = "PL1  ××";
+            BGM.count = 0;
+            back.GetComponent<AudioSource>().Play();
+            Mr_text.text = " ";//n goume が表示されていた場合、それを消去するためのもの
+
+            //penaが発生した場合に、その数を表示する処理        
+            //PL1_p.text = "PL1 pena = " + pena1;
+            if (pena1 == 1)
+            {
+                PL1_p.text = "PL1  ×○○";
+            }
+            if (pena1 >= 2)
+            {
+                PL1_p.text = "PL1  ××○";
+            }
+
+            //PL2_p.text = "PL2 pena = " + pena2;
+            if (pena2 == 1)
+            {
+                PL2_p.text = "PL2  ×○○";
+            }
+            if (pena2 >= 2)
+            {
+                PL2_p.text = "PL2  ××○";
+            }
+
+            pena_obj.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);//お手付きを表示
+            yield return new WaitForSeconds(3);
+            pena_obj.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);//お手付きを消去
+            reset = 1;
         }
-                
-        //PL2_p.text = "PL2 pena = " + pena2;
-        if (pena2 == 1)
-        {
-            PL2_p.text = "PL2  ×○";
-        }
-        if (pena2 >= 2)
-        {
-            PL2_p.text = "PL2  ××";
-        }
-        
-        pena_obj.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);//お手付きを表示
-        yield return new WaitForSeconds(3);
-        pena_obj.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);//お手付きを消去
-        reset = 1;
     }
 }
