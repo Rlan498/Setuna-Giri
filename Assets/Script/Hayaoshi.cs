@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,7 +45,7 @@ public class Hayaoshi : MonoBehaviour
     public static float timer = 0;//入力差を格納する変数
     public static int time_start = 0;//1の時に入力タイミングの差を計測 2で終了する処理
     public static int push = 0;//pushの表示関係
-
+    public static int drawsub = 0;
 
 
     // Start is called before the first frame update
@@ -69,7 +70,7 @@ public class Hayaoshi : MonoBehaviour
             stop = 0;//下のifの暴発阻止
         }
 
-        if(fight == 0 && (DEF1 != 0 || DEF2 != 0) && stop == 0)
+        if(fight == 0 && (DEF1 != 0 || DEF2 != 0) && stop == 0 && drawsub != 1)
         {
             stop = 1;
 
@@ -95,6 +96,7 @@ public class Hayaoshi : MonoBehaviour
             pena = false;
             timer = 0;
             time_start = 0;
+            drawsub = 0;
             BGM.count = 0;
         }
 
@@ -129,7 +131,7 @@ public class Hayaoshi : MonoBehaviour
                 }
             }
 
-            float rnd = Random.Range(4.0f, 10.0f);
+            float rnd = UnityEngine.Random.Range(4.0f, 10.0f);
             // ※ 4.0～10.0の範囲でランダムな小数点数値が返る
             //ここの数値の変更→見切りの秒数変更
 
@@ -195,7 +197,7 @@ public class Hayaoshi : MonoBehaviour
                     {
                         reset = 2;
                         pena1 = pena1 + 1;
-                        fight_array[i] = "PL1 ペナルティ負け";
+                        fight_array[i] = "PL1  ペナルティ負け";
                         Debug.Log("PL1 フライング3回目　負け");
                         i++;
                         StartCoroutine("pena_dis");
@@ -209,20 +211,22 @@ public class Hayaoshi : MonoBehaviour
                     {
                         ATK1 = 1;
                         time_start += 1;
-                        DEF2 += 1;
-                        //攻防シーンでのPL2の守備回数を記録
-                        fight_array[i] = "PL1";
-                        Debug.Log(i + "　PL1 勝ち");
-                        PL1_p.text = " ";//追いかけっこに移るためpenaを一時的に消去
-                        PL2_p.text = " ";
-
+                        
                     }
                     else if (ATK2 == 1)//PL2がすでに押しているとき　かつ　PL1が丁度押したとき
                     {
                         dif_calc();
-                        //image2.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
-                        rnd1 = 0;
-                        this.GetComponent<AudioSource>().Play();
+                        if (drawsub != 1)
+                        {
+                            fight_array[i] = "PL2";
+                            i += 1;
+                            Debug.Log(i + "　PL2 勝ち");
+                            PL1_p.text = " ";//追いかけっこに移るためpenaを一時的に消去
+                            PL2_p.text = " ";
+                            //image2.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
+                            rnd1 = 0;
+                            this.GetComponent<AudioSource>().Play();
+                        }
                     }
                 }
             }
@@ -244,7 +248,7 @@ public class Hayaoshi : MonoBehaviour
                     {
                         reset = 2;
                         pena2 = pena2 + 1;//ここが元々はpena1 = pena1 + 1;だった
-                        fight_array[i] = "PL2 ペナルティ負け";
+                        fight_array[i] = "PL2  ペナルティ負け";
                         Debug.Log("PL2 フライング3回目　負け");
                         i++;
                         StartCoroutine("pena_dis");
@@ -260,18 +264,24 @@ public class Hayaoshi : MonoBehaviour
                         time_start += 1;
                         DEF1 += 1;
                         //PL1の防御回数を記録
-
-                        fight_array[i] = "PL2";
-                        Debug.Log(i + "　PL2 勝ち");
-                        PL1_p.text = " ";//追いかけっこに移るためpenaを一時的に消去
-                        PL2_p.text = " ";
                     }
                     else if (ATK1 == 1)//PL1がすでに押しているとき　かつ　PL2が丁度押したとき
                     {
                         dif_calc();
-                        //image2_2.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
-                        rnd1 = 0;
-                        this.GetComponent<AudioSource>().Play();
+                        if (drawsub != 1)
+                        {
+                            fight_array[i] = "PL1";
+                            i += 1;
+                            DEF2 += 1;
+                            //攻防シーンでのPL2の守備回数を記録
+                            Debug.Log(i + "　PL1 勝ち");
+                            PL1_p.text = " ";//追いかけっこに移るためpenaを一時的に消去
+                            PL2_p.text = " ";
+
+                            //image2_2.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
+                            rnd1 = 0;
+                            this.GetComponent<AudioSource>().Play();
+                        }
                     }
                 }
             }
@@ -289,6 +299,7 @@ public class Hayaoshi : MonoBehaviour
         {
             reset = 0;
             fight = 1;
+            drawsub = 0;
             //ここに「！」画像表示の記述
             Mark.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
             Mark.GetComponent<AudioSource>().Play();
@@ -298,14 +309,26 @@ public class Hayaoshi : MonoBehaviour
 
     private void dif_calc()
     {
-        time_start += 1;
-        fight += 1;//この処理でfightは2のはず
-
-        time_array[i] = timer;
-        i += 1;
+        time_start -= 1;
+        
+        timer = (float)Math.Round(timer, 2, MidpointRounding.AwayFromZero);
+        
         Debug.Log("入力タイミングの差は" + timer + "でした");
+
         Mark.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);
-        image1.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);//image1 消去
+
+        if (timer <= 0.03)
+        {
+            drawsub = 1;
+            StartCoroutine("draw");
+        }
+
+        if (drawsub != 1)
+        {
+            time_array[i] = timer;
+            fight += 1;//この処理でfightは2のはず
+            image1.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);//image1 消去
+        }
     }
 
     private IEnumerator wait_only()
@@ -386,5 +409,20 @@ public class Hayaoshi : MonoBehaviour
             pena_obj.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);//お手付きを消去
             reset = 1;
         }
+    }
+
+    private IEnumerator draw()
+    {
+        CancelInvoke();
+        //引き分けの表示
+
+
+        yield return new WaitForSeconds(3);
+        fight = 0;
+        ATK1 = 0;
+        ATK2 = 0;
+        reset = 1;
+        timer = 0;
+        pena = false;
     }
 }

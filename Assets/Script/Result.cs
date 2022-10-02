@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class Result : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Result : MonoBehaviour
     GameObject PL1;
     GameObject PL2;
     int push;
+    public TextMeshProUGUI result;
 
     // Start is called before the first frame update
     void Start()
@@ -42,13 +44,13 @@ public class Result : MonoBehaviour
             }
             for (int j = 0; j < Hayaoshi.i; j++)
             {
-                if (Hayaoshi.fight_array[j] == "PL1 ペナルティ負け" || Hayaoshi.fight_array[j] == "PL2 ペナルティ負け")
+                if (Hayaoshi.fight_array[j] == "PL1  ペナルティ負け" || Hayaoshi.fight_array[j] == "PL2  ペナルティ負け")
                 {
-                    Debug.Log(j + 1 + "回目：" + Hayaoshi.fight_array[j]);
+                    result.text = result.text + (j + 1) + "回目：" + Hayaoshi.fight_array[j] + "\n";
                 }
                 else
                 {
-                    Debug.Log(j + 1 + "回目：攻撃側　" + Hayaoshi.fight_array[j] + "　入力差　" + Hayaoshi.time_array[j] + "　" + Chase.attack_array[j]);
+                    result.text = result.text + (j + 1) + "回目：攻撃側　" + Hayaoshi.fight_array[j] + "　入力差　" + Hayaoshi.time_array[j] + "　" + Chase.attack_array[j] + "\n";
                 }
             }
 

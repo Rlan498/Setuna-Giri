@@ -71,6 +71,7 @@ public class Title_Select : MonoBehaviour
         Hayaoshi.time_start = 0;
         Hayaoshi.count = 0;
         Hayaoshi.go = 0;
+        Hayaoshi.drawsub = 0;
 
         Chase.time_start = 1;
         Chase.win1 = 0;
