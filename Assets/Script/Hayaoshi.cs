@@ -31,6 +31,7 @@ public class Hayaoshi : MonoBehaviour
     GameObject back;
     GameObject pena_se;
     GameObject pena_fini;
+    GameObject conte;
     public TextMeshProUGUI Mr_text;
     public TextMeshProUGUI PL1_p;
     public TextMeshProUGUI PL2_p;
@@ -60,6 +61,7 @@ public class Hayaoshi : MonoBehaviour
         back = GameObject.Find("back");
         pena_se = GameObject.Find("pena_se");
         pena_fini = GameObject.Find("pena_fini");
+        conte = GameObject.Find("conte");
     }
 
     // Update is called once per frame
@@ -415,9 +417,11 @@ public class Hayaoshi : MonoBehaviour
     {
         CancelInvoke();
         //ˆø‚«•ª‚¯‚Ì•\Ž¦
+        conte.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
 
 
         yield return new WaitForSeconds(3);
+        conte.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);
         fight = 0;
         ATK1 = 0;
         ATK2 = 0;
