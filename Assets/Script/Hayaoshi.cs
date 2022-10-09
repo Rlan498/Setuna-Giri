@@ -222,6 +222,8 @@ public class Hayaoshi : MonoBehaviour
                         {
                             fight_array[i] = "PL2";
                             i += 1;
+                            DEF1 += 1;
+                            //PL1の防御回数を記録
                             Debug.Log(i + "　PL2 勝ち");
                             PL1_p.text = " ";//追いかけっこに移るためpenaを一時的に消去
                             PL2_p.text = " ";
@@ -264,8 +266,7 @@ public class Hayaoshi : MonoBehaviour
                     {
                         ATK2 = 1;
                         time_start += 1;
-                        DEF1 += 1;
-                        //PL1の防御回数を記録
+                        
                     }
                     else if (ATK1 == 1)//PL1がすでに押しているとき　かつ　PL2が丁度押したとき
                     {
