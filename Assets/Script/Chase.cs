@@ -62,8 +62,8 @@ public class Chase : MonoBehaviour
         {
             ATK.transform.position = new Vector2(-2, 0);
             DEF.transform.position = new Vector2(2, 0);
-            y_d.transform.position = new Vector2(8, 0);
-            y_a.transform.position = new Vector2(-8, 0);
+            y_d.transform.position = new Vector2(7, 0);
+            y_a.transform.position = new Vector2(-7, 0);
             y_d.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
             y_a.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
         }
@@ -72,8 +72,8 @@ public class Chase : MonoBehaviour
         {
             ATK.transform.position = new Vector2(2, 0);
             DEF.transform.position = new Vector2(-2, 0);
-            y_d.transform.position = new Vector2(-8, 0);
-            y_a.transform.position = new Vector2(8, 0);
+            y_d.transform.position = new Vector2(-7, 0);
+            y_a.transform.position = new Vector2(7, 0);
             y_d.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
             y_a.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
         }
