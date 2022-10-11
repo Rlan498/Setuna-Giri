@@ -8,45 +8,70 @@ public class Title_Select : MonoBehaviour
 {
     public static int place = 0;
 
+    GameObject Back;
+    GameObject Title;
+    GameObject start;
+    GameObject Exp;
+    GameObject Exit;
+    GameObject Arrow;
+    GameObject bgm_2;
+
+    int push = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         place = 0;
+        Back = GameObject.Find("Back");
+        Title = GameObject.Find("Title");
+        start = GameObject.Find("Start");
+        Exp = GameObject.Find("Exp");
+        Exit = GameObject.Find("Exit");
+        Arrow = GameObject.Find("Arrow");
+        bgm_2 = GameObject.Find("BGM_2");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))//選択肢　下に
+        if(push != 1)
         {
-            place += 1;
-        } else if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))//選択肢　上に
-        {
-            place -= 1;
-        } else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return)){//決定が押された時の処理
-            if(place == 0)//始めるを選択
+            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))//選択肢　下に
             {
-                this.GetComponent<AudioSource>().Play();
-                StartCoroutine("wait");
+                place += 1;
             }
-            else if(place == 1)//操作説明を選択
+            else if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))//選択肢　上に
             {
-                this.GetComponent<AudioSource>().Play();
+                place -= 1;
+            }
+            else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
+            {//決定が押された時の処理
+                if (place == 0)//始めるを選択
+                {
+                    push = 1;
+                    this.GetComponent<AudioSource>().Play();
+                    StartCoroutine("wait");
+                }
+                else if (place == 1)//操作説明を選択
+                {
+                    push = 1;
+                    this.GetComponent<AudioSource>().Play();
+                }
+                else if (place == 2)//ゲーム終了を選択
+                {
+                    //UnityEditor.EditorApplication.isPlaying = false;
+                    Application.Quit();
+                }
+            }
 
-            }
-            else if(place == 2)//ゲーム終了を選択
+            if (place > 2)//下から上に　上から下に行くための処理
             {
-                //UnityEditor.EditorApplication.isPlaying = false;
-                Application.Quit();
+                place = 0;
             }
-        }
-
-        if (place > 2)//下から上に　上から下に行くための処理
-        {
-            place = 0;
-        }else if(place < 0)
-        {
-            place = 2;
+            else if (place < 0)
+            {
+                place = 2;
+            }
         }
     }
 
@@ -54,6 +79,37 @@ public class Title_Select : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
 
+        for (float i = 0; i < 1; i += 0.1f)//Titleをフェードアウト
+        {
+            Debug.Log("タイトル消す奴通過");
+            Title.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 0.1f);
+            start.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 0.1f);
+            Exp.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 0.1f);
+            Exit.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 0.1f);
+            Arrow.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 0.1f);
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        for(float i = 0.3f; i >= 0; i -= 0.1f)
+        {
+            bgm_2.GetComponent<AudioSource>().volume = i;
+            yield return new WaitForSeconds(0.1f);
+        }
+        bgm_2.GetComponent<AudioSource>().volume = 0;
+
+        Back.transform.localPosition = new Vector2(0, 0);
+
+        for(float i = 10;i>=0.8f;i -= 0.1f)
+        {
+            Debug.Log("縮小通過");
+            Back.transform.localScale = new Vector2(i, i);
+            yield return new WaitForSeconds(0.001f);
+        }
+
+        Back.transform.localScale = new Vector2(0.8f, 0.8f);
+
+        yield return new WaitForSeconds(0.1f);
+        //ここからSampleSceneのための処理
         Hayaoshi.fight = 0;
         Hayaoshi.ready1 = 0;
         Hayaoshi.ready2 = 0;

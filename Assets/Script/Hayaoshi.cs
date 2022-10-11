@@ -417,9 +417,9 @@ public class Hayaoshi : MonoBehaviour
     private IEnumerator draw()
     {
         CancelInvoke();
+        reset = -1;//‰½ŒÌ‚©dØ‚è‚È‚¨‚µ‚Ä‚­‚ê‚È‚¢‚Ì‚Å‚»‚Ì‘Îô‚Æ‚µ‚Ä
         //ˆø‚«•ª‚¯‚Ì•\¦
         conte.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
-
 
         yield return new WaitForSeconds(3);
         conte.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);
