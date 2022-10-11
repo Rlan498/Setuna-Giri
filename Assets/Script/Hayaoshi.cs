@@ -314,13 +314,13 @@ public class Hayaoshi : MonoBehaviour
     {
         time_start -= 1;
         
-        timer = (float)Math.Round(timer, 2, MidpointRounding.AwayFromZero);
+        timer = (float)Math.Round(timer, 3, MidpointRounding.AwayFromZero);
         
         Debug.Log("入力タイミングの差は" + timer + "でした");
 
         Mark.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);
 
-        if (timer <= 0.03)
+        if (timer <= 0.016)
         {
             drawsub = 1;
             StartCoroutine("draw");
