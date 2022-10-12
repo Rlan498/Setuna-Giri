@@ -104,6 +104,7 @@ public class Title_Select : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
             {
                 exp_dis.SetActive(false);
+                pointer.transform.position = new Vector2(-3, -4.5f);
                 place2 = 0;
                 push = 0;
                 exp_open = false;
