@@ -11,6 +11,7 @@ public class Result : MonoBehaviour
     GameObject PL2;
     int push;
     public TextMeshProUGUI result;
+    public TextMeshProUGUI result_cause;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +43,26 @@ public class Result : MonoBehaviour
             {
                 Debug.Log("?????");//何かここを通ったとき用
             }
+
+            result_cause.text = "勝負の分かれ目";
+
+            if (Chase.win1 == 1 || Chase.win2 == 1)
+            {
+                result_cause.text = result_cause.text + "　鋭い一太刀";
+            }
+            else if (Hayaoshi.DEF1 == 3 || Hayaoshi.DEF2 == 3)
+            {
+                result_cause.text = result_cause.text + "　返し斬り";
+            }
+            else if (Hayaoshi.pena1 == 3 || Hayaoshi.pena2 == 3)
+            {
+                result_cause.text = result_cause.text + "　集中不足";
+            }
+            else
+            {
+                result_cause.text = result_cause.text + "　?????";
+            }
+
             for (int j = 0; j < Hayaoshi.i; j++)
             {
                 if (Hayaoshi.fight_array[j] == "PL1  ペナルティ負け" || Hayaoshi.fight_array[j] == "PL2  ペナルティ負け")
@@ -50,7 +71,7 @@ public class Result : MonoBehaviour
                 }
                 else
                 {
-                    result.text = result.text + (j + 1) + "回目：攻撃側　" + Hayaoshi.fight_array[j] + "　入力差　" + Hayaoshi.time_array[j] + "　" + Chase.attack_array[j] + "\n";
+                    result.text = result.text + (j + 1) + "回目：攻撃側　" + Hayaoshi.fight_array[j] + "　入力差　" + Hayaoshi.time_array[j] + "秒　" + Chase.attack_array[j] + "\n";
                 }
             }
 

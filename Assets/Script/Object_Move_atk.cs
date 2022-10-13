@@ -38,8 +38,8 @@ public class Object_Move_atk : MonoBehaviour
                 {
                     speed = speed + 2.5f;
                 }
+                Debug.Log("speed = " + speed);
             }
-            Debug.Log("speed = " + speed);
         
             if (Hayaoshi.ATK1 == 1)
             {

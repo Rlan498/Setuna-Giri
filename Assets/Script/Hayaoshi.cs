@@ -126,14 +126,16 @@ public class Hayaoshi : MonoBehaviour
             //‚±‚±‚Ì”’l‚Ì•ÏX¨Œ©Ø‚è‚Ì•b”•ÏX
 
             rnd1 = rnd;
-            if (Input.GetKeyDown(KeyCode.S) && ready1 == 0)
+            //if (Input.GetKeyDown(KeyCode.S) && ready1 == 0)
+            if (Input.GetKeyDown(KeyCode.Space) && ready1 == 0)
             {
                 ready1 = 1;
                 //PL1€”õ
                 Debug.Log("PL1 €”õŠ®—¹");
             }
 
-            if (Input.GetKeyDown(KeyCode.DownArrow) && ready2 == 0)
+            //if (Input.GetKeyDown(KeyCode.DownArrow) && ready2 == 0)
+            if ((Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return)) && ready2 == 0)
             {
                 ready2 = 1;
                 //PL2€”õ
@@ -170,7 +172,8 @@ public class Hayaoshi : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.S) && ready == 1 && reset == 0)
+            //if (Input.GetKeyDown(KeyCode.S) && ready == 1 && reset == 0)
+            if (Input.GetKeyDown(KeyCode.Space) && ready == 1 && reset == 0)
             {
                 if (fight == 0)
                 {
@@ -223,7 +226,8 @@ public class Hayaoshi : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.DownArrow) && ready == 1 && reset == 0)
+            //if (Input.GetKeyDown(KeyCode.DownArrow) && ready == 1 && reset == 0)
+            if ((Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return)) && ready == 1 && reset == 0)
             {
                 if (fight == 0)
                 {
