@@ -15,10 +15,14 @@ public class Chase : MonoBehaviour
     public static int win2 = 0;
 
     public GameObject Wall;//壁
-    GameObject conclusion;
     GameObject fa;
     GameObject y_d;
     GameObject y_a;
+    GameObject black_back;
+    GameObject white_back;
+    GameObject f_b;
+    GameObject conclusion;
+    GameObject main_camera;
 
     public static string[] attack_array = new string[5];
 
@@ -27,10 +31,14 @@ public class Chase : MonoBehaviour
     {
         ATK.SetActive(false);
         DEF.SetActive(false);
-        conclusion = GameObject.Find("conclusion");
         fa = GameObject.Find("failed_attack");
         y_d = GameObject.Find("you_def");
         y_a = GameObject.Find("you_atk");
+        black_back = GameObject.Find("Black_back");
+        f_b = GameObject.Find("finish_black");
+        conclusion = GameObject.Find("conclusion");
+        white_back = GameObject.Find("White_back");
+        main_camera = GameObject.Find("Main Camera");
     }
 
     // Update is called once per frame
@@ -42,6 +50,7 @@ public class Chase : MonoBehaviour
             time_start = 1;
             if(time_start == 1)
             {
+                Debug.Log("steream起動");
                 StartCoroutine("stream");
             }
         }
@@ -192,22 +201,7 @@ public class Chase : MonoBehaviour
             Hayaoshi.fight = 4;
             x = 5;
             y = 5;
-            conclusion.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
-            Debug.Log("決着");
-            conclusion.GetComponent<AudioSource>().Play();
-
-            yield return new WaitForSeconds(2);//⑤リザルトの表示(場所は移すかも)
-
-            if (win1 == 1 || (win2 == 0 && Hayaoshi.DEF1 == 3))
-            {
-                Debug.Log("PL1の勝利です");
-                SceneManager.LoadScene("Result");
-            }
-            else if (win2 == 1 || (win1 == 0 && Hayaoshi.DEF2 == 3))
-            {
-                Debug.Log("PL2の勝利です");
-                SceneManager.LoadScene("Result");
-            }
+            yield return Settlement();//決着演出からシーン移行まで
         }
         else
         {
@@ -217,6 +211,63 @@ public class Chase : MonoBehaviour
             fa.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);
             Hayaoshi.fight = 0;
             Debug.Log("見切りに移行");
+        }
+            
+    }
+
+    IEnumerator Settlement()//決着の演出を処理する部分
+    {
+        for (float i = 0; i < 20; i++) 
+        {
+            black_back.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 0.05f);
+            Debug.Log("暗転通過");
+            yield return new WaitForSeconds(0.017f);
+        }
+        yield return new WaitForSeconds(2);
+        if (win1 == 1 || (win2 == 0 && Hayaoshi.DEF1 == 3))//PL1勝利
+        {
+            f_b.transform.Rotate(new Vector3(0, 180, 0));
+            f_b.transform.position = new Vector2(6, -2.5f);
+            f_b.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 1);
+        }
+        else if (win2 == 1 || (win1 == 0 && Hayaoshi.DEF2 == 3))//PL2勝利
+        {
+            f_b.transform.Rotate(new Vector3(0, 0, 0));
+            f_b.transform.position = new Vector2(-6, -2.5f);
+            f_b.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 1);
+        }
+
+        conclusion.GetComponent<AudioSource>().Play();
+        white_back.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 1);
+        yield return new WaitForSeconds(0.025f);
+        white_back.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 1);
+
+        conclusion.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 1);
+        Debug.Log("決着");
+
+        yield return new WaitForSeconds(2);//⑤リザルトの表示(場所は移すかも)
+
+        for (float i = 0; i < 20; i++)
+        {
+            conclusion.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 0.05f);
+            f_b.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 0.05f);
+            Debug.Log("文字とか暗転");
+            yield return new WaitForSeconds(0.034f);
+        }
+        black_back.GetComponent<AudioSource>().Play();
+
+
+        yield return new WaitForSeconds(1);
+
+        if (win1 == 1 || (win2 == 0 && Hayaoshi.DEF1 == 3))
+        {
+            Debug.Log("PL1の勝利です");
+            SceneManager.LoadScene("Result");
+        }
+        else if (win2 == 1 || (win1 == 0 && Hayaoshi.DEF2 == 3))
+        {
+            Debug.Log("PL2の勝利です");
+            SceneManager.LoadScene("Result");
         }
     }
 }

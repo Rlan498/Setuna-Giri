@@ -25,8 +25,6 @@ public class Hayaoshi : MonoBehaviour
     GameObject Mark;
     GameObject PUSH;
     GameObject image1;
-    GameObject image2;
-    GameObject image2_2;
     GameObject pena_obj;
     GameObject back;
     GameObject pena_se;
@@ -55,8 +53,6 @@ public class Hayaoshi : MonoBehaviour
         Mark = GameObject.Find("Mark");
         PUSH = GameObject.Find("PUSH");
         image1 = GameObject.Find("image1");
-        image2 = GameObject.Find("image2");
-        image2_2 = GameObject.Find("image2_2");
         pena_obj = GameObject.Find("pena");
         back = GameObject.Find("back");
         pena_se = GameObject.Find("pena_se");
@@ -76,14 +72,6 @@ public class Hayaoshi : MonoBehaviour
         {
             stop = 1;
 
-            if (ATK1 == 1)
-            {
-                image2.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);
-            }
-            if (ATK2 == 1)
-            {
-                image2_2.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);
-            }
             image1.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
 
             //見切り開始時にリセットすべき変数

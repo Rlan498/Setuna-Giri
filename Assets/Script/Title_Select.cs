@@ -70,6 +70,13 @@ public class Title_Select : MonoBehaviour
                         push = 1;
                         exp_open = true;
                         this.GetComponent<AudioSource>().Play();
+                        exp1_1.SetActive(true);
+                        exp1_2.SetActive(false);
+                        exp1_3.SetActive(false);
+                        exp2_1.SetActive(false);
+                        exp2_2.SetActive(false);
+                        exp2_3.SetActive(false);
+                        exp2_4.SetActive(false);
                         exp_dis.SetActive(true);
                     }
                     else if (place == 2)//ÉQÅ[ÉÄèIóπÇëIë
@@ -104,6 +111,13 @@ public class Title_Select : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
             {
                 exp_dis.SetActive(false);
+                exp1_1.SetActive(true);
+                exp1_2.SetActive(false);
+                exp1_3.SetActive(false);
+                exp2_1.SetActive(false);
+                exp2_2.SetActive(false);
+                exp2_3.SetActive(false);
+                exp2_4.SetActive(false);
                 pointer.transform.position = new Vector2(-3, -4.5f);
                 place2 = 0;
                 push = 0;
