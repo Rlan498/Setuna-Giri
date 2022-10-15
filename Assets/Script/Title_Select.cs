@@ -28,6 +28,7 @@ public class Title_Select : MonoBehaviour
     int push = 0;
     int place2 = 0;
     bool exp_open = false;
+    float speed = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -142,7 +143,7 @@ public class Title_Select : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
 
-        for(float i = 0.3f; i >= 0; i -= 0.1f)
+        for(float i = 0.3f; i >= 0; i -= 0.1f)//BGSのフェードアウト
         {
             bgm_2.GetComponent<AudioSource>().volume = i;
             yield return new WaitForSeconds(0.1f);
@@ -151,7 +152,8 @@ public class Title_Select : MonoBehaviour
 
         Back.transform.localPosition = new Vector2(0, 0);
 
-        for(float i = 10;i>=0.8f;i -= 0.1f)
+        speed = 0.001f * Time.deltaTime;
+        for(float i = 10;i>=0.8f;i -= 0.3f)//画面の引き演出
         {
             Debug.Log("縮小通過");
             Back.transform.localScale = new Vector2(i, i);
